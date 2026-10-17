@@ -23,8 +23,9 @@ class Pumpkin {
         this.x -= this.speed
     }
 }
+
 const pumpkinArray = []
-for(let i = 0; i < 70; i++){
+for(let i = 0; i < 10; i++){
     const distance = (Math.random() * 500) + 400
     const vertical = (Math.random() * 800) + 100
 
@@ -37,7 +38,11 @@ for(let i = 0; i < 70; i++){
         pumpkinArray[0] = new Pumpkin(distance,vertical,ctx)
     }
 }
-console.log(pumpkinArray)
+function collision (object,charWidth) {
+    if (object.x - 100 <= charWidth && object.x >= 100){
+        console.log(object)
+    }
+}
 bgImage.onload = () => {
     let x = 0
     let Scrollspeed = 2
@@ -54,18 +59,17 @@ bgImage.onload = () => {
         ctx.clearRect(0,0,window.innerWidth,window.innerHeight)
         ctx.drawImage(bgImage,x,0,window.innerWidth,window.innerHeight)
     ctx.drawImage(bgImage,window.innerWidth + x,0,window.innerWidth,window.innerHeight)
-    ctx.drawImage(pumpkins,(window.innerWidth + 100 + x),100,100,100)
-    for(let i = 0; i < 10;i++){
+        for(let i = 0; i < 10;i++){
         const pumpkins = pumpkinArray[i]
-
+        collision(pumpkins,charWidth)
         pumpkins.update()
         pumpkins.draw()
       }
      ctx.drawImage(ghostSprite,49,84,144,262,100,y,charWidth,250)
       
-     if(y > window.innerHeight - charWidth){
-        y = window.innerHeight - charWidth
-        gravity = 0
+     if(y > window.innerHeight){
+       console.log('Done')
+       gravity = 0
      }
      else if(y < 0){
            y = 0
