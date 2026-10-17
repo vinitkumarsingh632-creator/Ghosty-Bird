@@ -12,8 +12,8 @@ class Pumpkin {
     constructor (x,y,ctx){
        this.x = x
        this.y = y
-       this.height = 150
-       this.width = 150
+       this.height = 180
+       this.width = 180
        this.speed = 2
     }
     draw(){
@@ -38,15 +38,14 @@ for(let i = 0; i < 10; i++){
         pumpkinArray[0] = new Pumpkin(distance,vertical,ctx)
     }
 }
-function collision (object,charWidth) {
-    if (object.x - 100 <= charWidth && object.x >= 100){
+function collision (object,charWidth,y) {
+    if (100 < object.x + object.width && 100 + 180 > object.x &&y < object.y + object.height && y + 250 > object.y ){
         console.log(object)
     }
 }
 bgImage.onload = () => {
     let x = 0
     let Scrollspeed = 2
-    let charSpeed = 10
     let gravity = 0
     let y = 200
     let charWidth = 150
@@ -61,7 +60,7 @@ bgImage.onload = () => {
     ctx.drawImage(bgImage,window.innerWidth + x,0,window.innerWidth,window.innerHeight)
         for(let i = 0; i < 10;i++){
         const pumpkins = pumpkinArray[i]
-        collision(pumpkins,charWidth)
+        collision(pumpkins,charWidth,y)
         pumpkins.update()
         pumpkins.draw()
       }
