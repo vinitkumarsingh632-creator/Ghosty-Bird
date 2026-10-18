@@ -37,16 +37,17 @@ for(let i = 0; i < 10; i++){
 
     if(pumpkinArray[0]){
         const previous = pumpkinArray[pumpkinArray.length - 1].x
-        console.log(previous)
         pumpkinArray.push(new Pumpkin(previous + distance,vertical,ctx))
     }
     else{
         pumpkinArray[0] = new Pumpkin(distance,vertical,ctx)
     }
 }
-// 100 < object.x + object.width && 100 + 150 > object.x &&y < object.y + object.height && y + 220 > object.y 
 function collision (object,charWidth,y) {
-    if ( 100 < object.radius + object.x && 100 + 120 >object.x && y <object.y +  object.radius && y + 220 > object.y
+    if (  100 < object.x + object.radius &&
+        100 + charWidth > object.x - object.radius &&
+        y < object.y + object.radius &&
+        y + 220 > object.y - object.radius
     ){
            return true
     }
@@ -75,19 +76,17 @@ bgImage.onload = () => {
         }
         pumpkins.update()
         pumpkins.draw()
-        if(pumpkins.x < -100) {
-            console.log(pumpkinArray[i])
-            pumpkinArray.splice(i,1)
-        }
+        if (pumpkins.x + pumpkins.radius < 0) {
+              pumpkinArray.splice(i, 1);
+}
       }
-      if(pumpkinArray.length < 6){
-        for(let i = 0; i < pumpkinArray.length; i++){
+      if(pumpkinArray.length < 5){
+        for(let i = 0; i < 10; i++){
     const distance = (Math.random() * 500) + 400
     const vertical = (Math.random() * 800) + 100
 
     if(pumpkinArray[0]){
         const previous = pumpkinArray[pumpkinArray.length - 1].x
-        console.log(previous)
         pumpkinArray.push(new Pumpkin(previous + distance,vertical,ctx))
     }
     else{
@@ -95,10 +94,13 @@ bgImage.onload = () => {
     }
 }
       }
-     ctx.drawImage(ghostSprite,49,120,144,262,100,y,charWidth,220)
+     ctx.drawImage(ghostSprite,49,120,135,230,100,y,charWidth,220)
+     ctx.beginPath()
+     ctx.rect(100,y,charWidth,220)
+     ctx.strokeStyle = 'red'
+     ctx.stroke()
       
      if(y > window.innerHeight){
-       console.log('Done')
        gravity = 0
      }
      else if(y < 0){
