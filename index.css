@@ -17,7 +17,7 @@ canvas{
     width: 100vw;
     backdrop-filter:blur(4px);
 }
-svg{
+#svg{
     cursor: pointer;
 }
 #circle{
@@ -26,9 +26,38 @@ svg{
 #play{
     transition: fill 1s;
 }
-svg:hover #circle{
+#svg:hover #circle{
   fill: black;
 }
-svg:hover #play{
+#svg:hover #play{
   fill: rgb(248, 248, 248);
+}
+#charDetails{
+    font-family: "Special Elite";
+}
+#retryContainer{
+    position: absolute;
+    top: 0%;
+    z-index: 1000;
+    height: 100vh;
+    display: flex;
+    gap: 10rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    background: #0000009b;
+}
+#retrySvg{
+    background-color: rgb(255, 251, 251);
+}
+#retry{
+    stroke: black;
+     cursor: pointer;
+}
+#retrySvg:hover #retry{
+    stroke: rgb(250, 119, 5);
+}
+#score{
+    color: orange;
 }
