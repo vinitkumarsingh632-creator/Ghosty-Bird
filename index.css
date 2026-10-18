@@ -85,3 +85,6 @@ canvas{
     font-size: 2rem;
    color: white;
 }
+#gameScoreDisplay{
+    display: none;
+}

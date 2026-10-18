@@ -20,7 +20,7 @@ class Pumpkin {
        this.y = y
        this.height = 210
        this.width = 210
-       this.speed = 3
+       this.speed = 1.5
        this.radius = 100
     }
     draw(){
@@ -35,7 +35,8 @@ class Pumpkin {
 }
 
 const pumpkinArray = []
-for(let i = 0; i < 10; i++){
+function createObstacles () {
+    for(let i = 0; i < 10; i++){
     const distance = (Math.random() * 500) + 400
     const vertical = (Math.random() * 800) + 100
 
@@ -44,9 +45,12 @@ for(let i = 0; i < 10; i++){
         pumpkinArray.push(new Pumpkin(previous + distance,vertical,ctx))
     }
     else{
-        pumpkinArray[0] = new Pumpkin(distance,vertical,ctx)
+        pumpkinArray[0] = new Pumpkin(distance + 900,vertical,ctx)
     }
 }
+
+}
+createObstacles()
 function collision(object, charWidth, y) {
     const padding = 20;
 
@@ -71,20 +75,39 @@ function collision(object, charWidth, y) {
 bgImage.onload = () => {
     document.getElementById('gotIt').addEventListener('click',()=>{
         document.getElementById('rulesContainer').style.display = 'none'
+        document.getElementById('gameScoreDisplay').style.display = 'flex'
         raf()
     })
+   
     let x = 0
-    let Scrollspeed = 3
+    let Scrollspeed = 1.5
+    let score = 0
+    let scoreIncreaser = 0.01
     let gravity = 0
     let y = 200
     let charWidth = 120
     let gravitySpeed = 0.02
+     document.getElementById('retrySvg').addEventListener('click',()=>{
+        document.getElementById('retryContainer').style.display = 'none'
+        x = 0
+        gravity = 0 
+        y = 200
+        score = 0
+        pumpkinArray.length = 0
+        createObstacles()
+        document.getElementById('gameScoreDisplay').style.display = 'flex'
+        raf()
+    })
     ctx.drawImage(bgImage,x,0,window.innerWidth,window.innerHeight)
     window.addEventListener('keydown',(event)=>{
         gravity = -2.5
     })
     let animationId;
     function raf () {
+
+        score+=scoreIncreaser
+        document.getElementById('gameScore').textContent = score.toFixed(0)
+        console.log(score.toFixed(0))
         animationId = requestAnimationFrame(raf)
         ctx.clearRect(0,0,window.innerWidth,window.innerHeight)
         ctx.drawImage(bgImage,x,0,window.innerWidth,window.innerHeight)
@@ -93,6 +116,9 @@ bgImage.onload = () => {
         const pumpkins = pumpkinArray[i]
         if(collision(pumpkins,charWidth,y)){
             cancelAnimationFrame(animationId)
+            document.getElementById('gameScoreDisplay').style.display = 'none'
+            document.getElementById('score').textContent = score.toFixed(0)
+            document.getElementById('retryContainer').style.display = 'flex'
         }
         pumpkins.update()
         pumpkins.draw()
@@ -119,6 +145,9 @@ bgImage.onload = () => {
      if(y > window.innerHeight){
        gravity = 0
        cancelAnimationFrame(animationId)
+       document.getElementById('gameScoreDisplay').style.display = 'none'
+       document.getElementById('score').textContent = score.toFixed(0)
+       document.getElementById('retryContainer').style.display = 'flex'
      }
      else if(y < 0){
            y = 0
