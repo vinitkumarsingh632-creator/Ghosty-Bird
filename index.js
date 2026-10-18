@@ -21,8 +21,6 @@ class Pumpkin {
         
       ctx.beginPath()
       ctx.arc(this.x,this.y,100,0,Math.PI * 2, )
-      ctx.strokeStyle = 'red'
-      ctx.stroke()
       ctx.drawImage(pumpkins,this.x - this.radius,this.y - this.radius, this.width,this.height )
     }
     update(){
@@ -43,15 +41,25 @@ for(let i = 0; i < 10; i++){
         pumpkinArray[0] = new Pumpkin(distance,vertical,ctx)
     }
 }
-function collision (object,charWidth,y) {
-    if (  100 < object.x + object.radius &&
-        100 + charWidth > object.x - object.radius &&
-        y < object.y + object.radius &&
-        y + 220 > object.y - object.radius
-    ){
-           return true
-    }
- return false   
+function collision(object, charWidth, y) {
+    const padding = 20;
+
+    const ghostLeft = 100 + padding;
+    const ghostRight = 100 + charWidth - padding;
+    const ghostTop = y + padding;
+    const ghostBottom = y + 220 - padding;
+
+    const pumpkinLeft = object.x - object.radius + 15;
+    const pumpkinRight = object.x - object.radius + object.width - 15;
+    const pumpkinTop = object.y - object.radius + 15;
+    const pumpkinBottom = object.y - object.radius + object.height - 15;
+
+    return (
+        ghostLeft < pumpkinRight &&
+        ghostRight > pumpkinLeft &&
+        ghostTop < pumpkinBottom &&
+        ghostBottom > pumpkinTop
+    );
 }
 bgImage.onload = () => {
     let x = 0
@@ -60,12 +68,13 @@ bgImage.onload = () => {
     let y = 200
     let charWidth = 120
     let gravitySpeed = 0.02
+    ctx.drawImage(bgImage,x,0,window.innerWidth,window.innerHeight)
     window.addEventListener('keydown',(event)=>{
         gravity = -2.5
     })
     let animationId;
     function raf () {
-       animationId =  requestAnimationFrame(raf)
+        animationId = requestAnimationFrame(raf)
         ctx.clearRect(0,0,window.innerWidth,window.innerHeight)
         ctx.drawImage(bgImage,x,0,window.innerWidth,window.innerHeight)
     ctx.drawImage(bgImage,window.innerWidth + x,0,window.innerWidth,window.innerHeight)
@@ -95,13 +104,10 @@ bgImage.onload = () => {
 }
       }
      ctx.drawImage(ghostSprite,49,120,135,230,100,y,charWidth,220)
-     ctx.beginPath()
-     ctx.rect(100,y,charWidth,220)
-     ctx.strokeStyle = 'red'
-     ctx.stroke()
       
      if(y > window.innerHeight){
        gravity = 0
+       cancelAnimationFrame(animationId)
      }
      else if(y < 0){
            y = 0
