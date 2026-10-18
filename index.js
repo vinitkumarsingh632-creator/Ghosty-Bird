@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d')
 canvas.height = window.innerHeight
 canvas.width = window.innerWidth
 const bgImage = new Image()
+let play = true
 bgImage.src = './Assets/bg.jpg';
 const ghostSprite = new Image()
 ghostSprite.src = './Assets/ghostSprite.png'
@@ -14,7 +15,7 @@ class Pumpkin {
        this.y = y
        this.height = 210
        this.width = 210
-       this.speed = 2
+       this.speed = 3
        this.radius = 100
     }
     draw(){
@@ -61,9 +62,10 @@ function collision(object, charWidth, y) {
         ghostBottom > pumpkinTop
     );
 }
+
 bgImage.onload = () => {
     let x = 0
-    let Scrollspeed = 2
+    let Scrollspeed = 3
     let gravity = 0
     let y = 200
     let charWidth = 120
@@ -127,5 +129,5 @@ bgImage.onload = () => {
     }
     
     }
-    raf()
+    
 }
