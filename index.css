@@ -47,6 +47,7 @@ canvas{
     align-items: center;
     width: 100vw;
     background: #0000009b;
+    display: none;
 }
 #retrySvg{
     background-color: rgb(255, 251, 251);
@@ -60,4 +61,27 @@ canvas{
 }
 #score{
     color: orange;
+}
+#rulesContainer{
+    position: absolute;
+    top: 0%;
+    z-index: 100000;
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+     backdrop-filter: brightness(0.3);
+}
+#rules{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    font-family: "Special Elite";
+    font-size: 2rem;
+   color: white;
 }

@@ -1,5 +1,9 @@
 const canvas = document.getElementById('canvas')
-
+document.getElementsByTagName('svg')[0].addEventListener('click',()=>{
+    document.getElementsByClassName('container')[0].style.display = 'none'
+    document.getElementById('rulesContainer').style.display = 'flex'
+    
+})
 const ctx = canvas.getContext('2d')
 canvas.height = window.innerHeight
 canvas.width = window.innerWidth
@@ -65,10 +69,10 @@ function collision(object, charWidth, y) {
 }
 
 bgImage.onload = () => {
-    document.getElementsByTagName('svg')[0].addEventListener('click',()=>{
-    document.getElementsByClassName('container')[0].style.display = 'none'
-    raf()
-})
+    document.getElementById('gotIt').addEventListener('click',()=>{
+        document.getElementById('rulesContainer').style.display = 'none'
+        raf()
+    })
     let x = 0
     let Scrollspeed = 3
     let gravity = 0
