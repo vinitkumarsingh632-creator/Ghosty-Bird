@@ -35,9 +35,9 @@ class Pumpkin {
 }
 
 const pumpkinArray = []
-function createObstacles () {
+function createObstacles ( gap) {
     for(let i = 0; i < 10; i++){
-    const distance = (Math.random() * 500) + 400
+    const distance = (Math.random() * gap) + 400
     const vertical = (Math.random() * 800) + 100
 
     if(pumpkinArray[0]){
@@ -50,7 +50,7 @@ function createObstacles () {
 }
 
 }
-createObstacles()
+createObstacles(500)
 function collision(object, charWidth, y) {
     const padding = 20;
 
@@ -82,6 +82,7 @@ bgImage.onload = () => {
     let x = 0
     let Scrollspeed = 1.5
     let score = 0
+    let gap = 500
     let scoreIncreaser = 0.01
     let gravity = 0
     let y = 200
@@ -93,8 +94,11 @@ bgImage.onload = () => {
         gravity = 0 
         y = 200
         score = 0
+        scoreIncreaser = 0.01
+        gap = 500
+        Scrollspeed = 1.5
         pumpkinArray.length = 0
-        createObstacles()
+        createObstacles(gap)
         document.getElementById('gameScoreDisplay').style.display = 'flex'
         raf()
     })
@@ -104,8 +108,9 @@ bgImage.onload = () => {
     })
     let animationId;
     function raf () {
-
+  
         score+=scoreIncreaser
+        
         document.getElementById('gameScore').textContent = score.toFixed(0)
         console.log(score.toFixed(0))
         animationId = requestAnimationFrame(raf)
@@ -113,7 +118,25 @@ bgImage.onload = () => {
         ctx.drawImage(bgImage,x,0,window.innerWidth,window.innerHeight)
     ctx.drawImage(bgImage,window.innerWidth + x,0,window.innerWidth,window.innerHeight)
         for(let i = pumpkinArray.length - 1; i >= 0; i--){
+            
         const pumpkins = pumpkinArray[i]
+        if(score > 30 && score < 50) {
+                Scrollspeed = 1.8
+                pumpkins.speed = 1.8
+                
+            }
+            else if(score > 50 && score < 80){
+                Scrollspeed = 2
+                pumpkins.speed = 2
+                gap = 400
+                scoreIncreaser = 0.02
+            }
+            else if(score > 80 ){
+                Scrollspeed = 2.5
+                pumpkins.speed = 2.5
+                gap = 300
+                scoreIncreaser = 0.025
+            }
         if(collision(pumpkins,charWidth,y)){
             cancelAnimationFrame(animationId)
             document.getElementById('gameScoreDisplay').style.display = 'none'
@@ -128,7 +151,7 @@ bgImage.onload = () => {
       }
       if(pumpkinArray.length < 5){
         for(let i = 0; i < 10; i++){
-    const distance = (Math.random() * 500) + 400
+    const distance = (Math.random() * gap) + 400
     const vertical = (Math.random() * 800) + 100
 
     if(pumpkinArray[0]){
