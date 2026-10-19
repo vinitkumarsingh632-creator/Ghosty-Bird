@@ -1,5 +1,8 @@
 const canvas = document.getElementById('canvas')
+const fallSound = document.getElementById('fallingSound')
+       fallSound.playbackRate = 3
 document.getElementsByTagName('svg')[0].addEventListener('click',()=>{
+    document.getElementById('bgSound').play()
     document.getElementsByClassName('container')[0].style.display = 'none'
     document.getElementById('rulesContainer').style.display = 'flex'
     
@@ -138,6 +141,9 @@ bgImage.onload = () => {
                 scoreIncreaser = 0.025
             }
         if(collision(pumpkins,charWidth,y)){
+         const sound =   document.getElementById('collideSound')
+         sound.playbackRate = 2
+         sound.play()
             cancelAnimationFrame(animationId)
             document.getElementById('gameScoreDisplay').style.display = 'none'
             document.getElementById('score').textContent = score.toFixed(0)
@@ -167,6 +173,8 @@ bgImage.onload = () => {
       
      if(y > window.innerHeight){
        gravity = 0
+       
+       fallSound.play()
        cancelAnimationFrame(animationId)
        document.getElementById('gameScoreDisplay').style.display = 'none'
        document.getElementById('score').textContent = score.toFixed(0)
